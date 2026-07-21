@@ -95,3 +95,4 @@ npm test
 3. Construir formularios de alta y edicion.
 4. Incorporar filtros avanzados de perforaciones y dashboard.
 5. Agregar pruebas unitarias de servicios, guards e interacciones principales.
+# ssrmining-control-frontend
