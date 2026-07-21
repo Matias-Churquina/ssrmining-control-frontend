@@ -1,0 +1,27 @@
+<section class="page-heading">
+  <div>
+    <small>Registro</small>
+    <h1>Perforaciones</h1>
+  </div>
+  <button type="button">Nueva perforacion</button>
+</section>
+
+<section class="table-panel">
+  <header>
+    <strong>Registros operativos</strong>
+    <span>{{ perforaciones().length }} registros</span>
+  </header>
+
+  <div class="table-list">
+    @for (perforacion of perforaciones(); track perforacion.idPerforacion) {
+      <article>
+        <div>
+          <strong>{{ perforacion.codigoPerforacion }}</strong>
+          <small>{{ perforacion.fecha }} - Banco {{ perforacion.banco }}</small>
+        </div>
+        <span>{{ perforacion.metrosPerforados }} m</span>
+        <span>{{ perforacion.estado }}</span>
+      </article>
+    }
+  </div>
+</section>

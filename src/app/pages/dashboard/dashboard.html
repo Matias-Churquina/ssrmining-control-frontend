@@ -1,0 +1,20 @@
+<section class="page-heading">
+  <div>
+    <small>Dashboard</small>
+    <h1>Resumen operativo</h1>
+  </div>
+  <button type="button">Exportar</button>
+</section>
+
+<section class="metrics-grid">
+  <app-metric-tile label="Perforaciones" [value]="resumen()?.totales?.perforaciones ?? 0" hint="Total registrado" />
+  <app-metric-tile label="Pendientes" [value]="resumen()?.totales?.pendientes ?? 0" hint="Requieren revision" />
+  <app-metric-tile label="Aprobadas" [value]="resumen()?.totales?.aprobadas ?? 0" hint="Control supervisor" />
+  <app-metric-tile label="Adherencia" [value]="(resumen()?.metricas?.adherenciaPromedio ?? 0) + '%'" hint="Promedio operacional" />
+</section>
+
+<section class="content-grid">
+  <app-status-card title="Calidad de datos" status="Activo" description="Los filtros y metricas se alimentan desde el backend V1." />
+  <app-status-card title="Flujo supervisor" status="Pendiente" description="La siguiente iteracion completara aprobacion, rechazo y trazabilidad visual." />
+  <app-status-card title="Operacion tablet" status="Base lista" description="Layout responsive preparado para uso recurrente en terreno." />
+</section>

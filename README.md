@@ -1,59 +1,98 @@
-# SsrminingControlFrontend
+# SSRMining Control de Perforaciones - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.4.
+Frontend web para tablets y navegadores de escritorio del sistema de control de perforaciones de SSRMining.
 
-## Development server
+Preparado por **Credere.Dev**.
 
-To start a local development server, run:
+## Stack inicial
 
-```bash
-ng serve
+- Angular 22
+- TypeScript
+- SCSS
+- Bootstrap
+- Bootstrap Icons
+- RxJS
+- Angular Router
+- Angular HttpClient
+
+## Estructura base
+
+```text
+src/app/
+├── components/
+│   ├── app-shell/
+│   ├── metric-tile/
+│   └── status-card/
+├── core/
+│   ├── guards/
+│   └── interceptors/
+├── models/
+├── pages/
+│   ├── login/
+│   ├── dashboard/
+│   ├── usuarios/
+│   ├── equipos/
+│   ├── perforaciones/
+│   └── revision-supervisor/
+├── services/
+└── app.routes.ts
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Relacion con backend
 
-## Code scaffolding
+El frontend queda preparado para consumir la API V1 del backend:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```text
+http://localhost:3000/api/v1
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+La URL esta definida en:
 
-```bash
-ng generate --help
+```text
+src/environments/environment.ts
 ```
 
-## Building
+## Comandos
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Instalar dependencias:
 
 ```bash
-ng test
+npm install
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Levantar en desarrollo:
 
 ```bash
-ng e2e
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Compilar:
 
-## Additional Resources
+```bash
+npm run build
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Ejecutar pruebas:
+
+```bash
+npm test
+```
+
+## Alcance de esta primera base
+
+- Login conectado al endpoint de autenticacion.
+- Persistencia local del token JWT.
+- Interceptor para enviar `Authorization: Bearer <token>`.
+- Guard para proteger rutas internas.
+- Layout responsive orientado a tablets.
+- Paginas iniciales para dashboard, usuarios, equipos, perforaciones y revision de supervisor.
+- Servicios tipados para consumir los modulos ya disponibles en backend V1.
+
+## Siguientes pasos
+
+1. Validar visualmente la app con el backend corriendo.
+2. Ajustar contratos si alguna respuesta real difiere del tipado inicial.
+3. Construir formularios de alta y edicion.
+4. Incorporar filtros avanzados de perforaciones y dashboard.
+5. Agregar pruebas unitarias de servicios, guards e interacciones principales.
+# ssrmining-control-frontend

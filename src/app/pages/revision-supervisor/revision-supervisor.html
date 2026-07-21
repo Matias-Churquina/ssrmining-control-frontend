@@ -1,0 +1,26 @@
+<section class="page-heading">
+  <div>
+    <small>Supervisor</small>
+    <h1>Revision de perforaciones</h1>
+  </div>
+</section>
+
+<section class="table-panel">
+  <header>
+    <strong>Pendientes de aprobacion</strong>
+    <span>{{ pendientes().length }} registros</span>
+  </header>
+
+  <div class="table-list">
+    @for (perforacion of pendientes(); track perforacion.idPerforacion) {
+      <article>
+        <div>
+          <strong>{{ perforacion.codigoPerforacion }}</strong>
+          <small>{{ perforacion.tipoRoca }} - {{ perforacion.tipoPozo }}</small>
+        </div>
+        <span>{{ perforacion.profundidadReal }} m</span>
+        <span>{{ perforacion.estado }}</span>
+      </article>
+    }
+  </div>
+</section>

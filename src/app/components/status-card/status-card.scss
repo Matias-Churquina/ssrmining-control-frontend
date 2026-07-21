@@ -1,0 +1,29 @@
+.status-card {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid #dbe4e7;
+  border-radius: 8px;
+  background: #ffffff;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  span {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #eaf4ef;
+    color: #1f6b45;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: #64747c;
+  }
+}

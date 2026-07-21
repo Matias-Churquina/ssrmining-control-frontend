@@ -1,0 +1,21 @@
+.metric-tile {
+  min-height: 132px;
+  display: grid;
+  align-content: space-between;
+  gap: 8px;
+  padding: 18px;
+  border: 1px solid #dbe4e7;
+  border-radius: 8px;
+  background: #ffffff;
+
+  span,
+  small {
+    color: #64747c;
+  }
+
+  strong {
+    color: #172126;
+    font-size: 2rem;
+    line-height: 1;
+  }
+}
