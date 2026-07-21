@@ -1,0 +1,91 @@
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    linear-gradient(rgba(14, 29, 34, 0.76), rgba(14, 29, 34, 0.76)),
+    url('/favicon.ico') center / 80px no-repeat,
+    #172126;
+}
+
+.login-panel {
+  width: min(460px, 100%);
+  display: grid;
+  gap: 28px;
+  padding: 32px;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  span {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: #f4b740;
+    color: #172126;
+    font-weight: 800;
+  }
+
+  small {
+    display: block;
+    color: #64747c;
+  }
+}
+
+form {
+  display: grid;
+  gap: 18px;
+
+  h1,
+  p {
+    margin: 0;
+  }
+
+  p {
+    color: #64747c;
+  }
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  color: #2c3f47;
+  font-weight: 700;
+}
+
+input {
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid #ccd8dc;
+  border-radius: 8px;
+  font: inherit;
+}
+
+button {
+  min-height: 50px;
+  border: 0;
+  border-radius: 8px;
+  background: #1f6b45;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.alert-message {
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff0ed;
+  color: #a33b27;
+}
+
+footer {
+  color: #64747c;
+  font-weight: 700;
+}

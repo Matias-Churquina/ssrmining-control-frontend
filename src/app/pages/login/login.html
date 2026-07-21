@@ -1,0 +1,36 @@
+<main class="login-page">
+  <section class="login-panel">
+    <div class="brand-row">
+      <span>SR</span>
+      <div>
+        <strong>SSRMining</strong>
+        <small>Control de perforaciones</small>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="ingresar()">
+      <h1>Ingreso operativo</h1>
+      <p>Acceso para administradores, supervisores y operadores autorizados.</p>
+
+      <label>
+        Legajo
+        <input type="text" formControlName="legajo" autocomplete="username" />
+      </label>
+
+      <label>
+        Contrasena
+        <input type="password" formControlName="password" autocomplete="current-password" />
+      </label>
+
+      @if (error()) {
+        <div class="alert-message">{{ error() }}</div>
+      }
+
+      <button type="submit" [disabled]="cargando()">
+        {{ cargando() ? 'Validando...' : 'Ingresar' }}
+      </button>
+    </form>
+
+    <footer>Credere.Dev</footer>
+  </section>
+</main>

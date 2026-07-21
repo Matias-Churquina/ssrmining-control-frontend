@@ -1,0 +1,27 @@
+<section class="page-heading">
+  <div>
+    <small>Administracion</small>
+    <h1>Usuarios y roles</h1>
+  </div>
+  <button type="button">Nuevo usuario</button>
+</section>
+
+<section class="table-panel">
+  <header>
+    <strong>Usuarios activos</strong>
+    <span>{{ usuarios().length }} registros</span>
+  </header>
+
+  <div class="table-list">
+    @for (usuario of usuarios(); track usuario.idUsuario) {
+      <article>
+        <div>
+          <strong>{{ usuario.nombre }} {{ usuario.apellido }}</strong>
+          <small>{{ usuario.email }}</small>
+        </div>
+        <span>{{ usuario.legajo }}</span>
+        <span>{{ usuario.activo ? 'Activo' : 'Inactivo' }}</span>
+      </article>
+    }
+  </div>
+</section>

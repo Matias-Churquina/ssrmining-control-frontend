@@ -1,0 +1,27 @@
+<section class="page-heading">
+  <div>
+    <small>Operacion</small>
+    <h1>Equipos de perforacion</h1>
+  </div>
+  <button type="button">Nuevo equipo</button>
+</section>
+
+<section class="table-panel">
+  <header>
+    <strong>Inventario operativo</strong>
+    <span>{{ equipos().length }} equipos</span>
+  </header>
+
+  <div class="table-list">
+    @for (equipo of equipos(); track equipo.idEquipo) {
+      <article>
+        <div>
+          <strong>{{ equipo.codigo }}</strong>
+          <small>{{ equipo.descripcion }}</small>
+        </div>
+        <span>{{ equipo.modelo }}</span>
+        <span>{{ equipo.estado }}</span>
+      </article>
+    }
+  </div>
+</section>
