@@ -41,6 +41,46 @@
   gap: 16px;
 }
 
+.compact {
+  margin-top: 16px;
+}
+
+.data-panel {
+  min-height: 240px;
+  padding: 18px;
+  border: 1px solid #dbe4e7;
+  border-radius: 8px;
+  background: #ffffff;
+
+  header,
+  .bar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  header {
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #edf2f4;
+  }
+
+  header span,
+  .bar-row span {
+    color: #64747c;
+  }
+
+  .bar-row {
+    min-height: 38px;
+    border-bottom: 1px solid #f1f4f5;
+  }
+
+  .bar-row:last-child {
+    border-bottom: 0;
+  }
+}
+
 @media (max-width: 1100px) {
   .metrics-grid,
   .content-grid {

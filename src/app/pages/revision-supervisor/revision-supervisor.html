@@ -18,8 +18,8 @@
           <strong>{{ perforacion.codigoPerforacion }}</strong>
           <small>{{ perforacion.tipoRoca }} - {{ perforacion.tipoPozo }}</small>
         </div>
-        <span>{{ perforacion.profundidadReal }} m</span>
-        <span>{{ perforacion.estado }}</span>
+        <span>{{ perforacion.usuarioRegistro?.apellido }}, {{ perforacion.usuarioRegistro?.nombre }}</span>
+        <span>{{ perforacion.profundidadReal }} m · {{ perforacion.equipo?.codigo }}</span>
       </article>
     }
   </div>

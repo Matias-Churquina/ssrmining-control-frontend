@@ -1,16 +1,23 @@
 export interface DashboardResumen {
-  totales?: {
-    perforaciones: number;
-    pendientes: number;
-    aprobadas: number;
-    rechazadas: number;
-  };
-  metricas?: {
-    metrosPerforados: number;
-    profundidadDiseno: number;
-    adherenciaPromedio: number;
+  filtros: Record<string, string | number | undefined>;
+  kpis: {
+    metrosTotales: number;
+    pozosCompletados: number;
     ropPromedio: number;
+    adherenciaDiseno: number;
   };
-  porEstado?: Array<{ estado: string; total: number }>;
-  porEquipo?: Array<{ codigo: string; total: number; metrosPerforados: number }>;
+  graficos: {
+    metrosPorRoca: NumericGroup[];
+    distribucionTipoPozo: NumericGroup[];
+    metrosPorEquipo: NumericGroup[];
+    metrosPorFase: NumericGroup[];
+    metrosPorBanco: NumericGroup[];
+    rankingOperadores: NumericGroup[];
+    ropPorRoca: Array<{ name: string; ropPromedio: number }>;
+  };
+}
+
+export interface NumericGroup {
+  name: string;
+  value: number;
 }
