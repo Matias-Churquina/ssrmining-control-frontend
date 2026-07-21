@@ -1,7 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { ApiResponse } from '../models/api-response.model';
 import { DashboardResumen } from '../models/dashboard.model';
 
 @Injectable({ providedIn: 'root' })
@@ -18,6 +20,8 @@ export class DashboardService {
       }
     });
 
-    return this.http.get<DashboardResumen>(`${this.apiUrl}/resumen`, { params });
+    return this.http.get<ApiResponse<DashboardResumen>>(`${this.apiUrl}/resumen`, { params }).pipe(
+      map((response) => response.data)
+    );
   }
 }

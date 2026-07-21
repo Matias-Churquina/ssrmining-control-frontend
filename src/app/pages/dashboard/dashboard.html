@@ -7,14 +7,58 @@
 </section>
 
 <section class="metrics-grid">
-  <app-metric-tile label="Perforaciones" [value]="resumen()?.totales?.perforaciones ?? 0" hint="Total registrado" />
-  <app-metric-tile label="Pendientes" [value]="resumen()?.totales?.pendientes ?? 0" hint="Requieren revision" />
-  <app-metric-tile label="Aprobadas" [value]="resumen()?.totales?.aprobadas ?? 0" hint="Control supervisor" />
-  <app-metric-tile label="Adherencia" [value]="(resumen()?.metricas?.adherenciaPromedio ?? 0) + '%'" hint="Promedio operacional" />
+  <app-metric-tile label="Metros totales" [value]="resumen()?.kpis?.metrosTotales ?? 0" hint="Perforados en filtros activos" />
+  <app-metric-tile label="Pozos" [value]="resumen()?.kpis?.pozosCompletados ?? 0" hint="Registros considerados" />
+  <app-metric-tile label="ROP promedio" [value]="resumen()?.kpis?.ropPromedio ?? 0" hint="m/h operacional" />
+  <app-metric-tile label="Adherencia" [value]="(resumen()?.kpis?.adherenciaDiseno ?? 0) + '%'" hint="Diseno vs real" />
 </section>
 
 <section class="content-grid">
-  <app-status-card title="Calidad de datos" status="Activo" description="Los filtros y metricas se alimentan desde el backend V1." />
-  <app-status-card title="Flujo supervisor" status="Pendiente" description="La siguiente iteracion completara aprobacion, rechazo y trazabilidad visual." />
-  <app-status-card title="Operacion tablet" status="Base lista" description="Layout responsive preparado para uso recurrente en terreno." />
+  <article class="data-panel">
+    <header>
+      <strong>Metros por equipo</strong>
+      <span>m perforados</span>
+    </header>
+
+    @for (item of resumen()?.graficos?.metrosPorEquipo ?? []; track item.name) {
+      <div class="bar-row">
+        <span>{{ item.name }}</span>
+        <strong>{{ item.value }}</strong>
+      </div>
+    }
+  </article>
+
+  <article class="data-panel">
+    <header>
+      <strong>Ranking operadores</strong>
+      <span>produccion</span>
+    </header>
+
+    @for (item of resumen()?.graficos?.rankingOperadores ?? []; track item.name) {
+      <div class="bar-row">
+        <span>{{ item.name }}</span>
+        <strong>{{ item.value }}</strong>
+      </div>
+    }
+  </article>
+
+  <article class="data-panel">
+    <header>
+      <strong>Tipo de pozo</strong>
+      <span>cantidad</span>
+    </header>
+
+    @for (item of resumen()?.graficos?.distribucionTipoPozo ?? []; track item.name) {
+      <div class="bar-row">
+        <span>{{ item.name }}</span>
+        <strong>{{ item.value }}</strong>
+      </div>
+    }
+  </article>
+</section>
+
+<section class="content-grid compact">
+  <app-status-card title="Calidad de datos" status="Activo" description="Los KPIs se alimentan desde perforaciones reales del backend V1." />
+  <app-status-card title="Datos demo" status="Cargados" description="Seed local con usuarios, equipos y perforaciones en distintos estados." />
+  <app-status-card title="Operacion tablet" status="Base lista" description="Layout responsive preparado para recorridos operativos en campo." />
 </section>

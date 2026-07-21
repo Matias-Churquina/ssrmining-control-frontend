@@ -19,8 +19,8 @@
           <strong>{{ perforacion.codigoPerforacion }}</strong>
           <small>{{ perforacion.fecha }} - Banco {{ perforacion.banco }}</small>
         </div>
-        <span>{{ perforacion.metrosPerforados }} m</span>
-        <span>{{ perforacion.estado }}</span>
+        <span>{{ perforacion.equipo?.codigo || 'Equipo' }} - {{ perforacion.metrosPerforados }} m</span>
+        <span>{{ perforacion.estado }} · ROP {{ perforacion.calculos?.rop ?? 0 }}</span>
       </article>
     }
   </div>
