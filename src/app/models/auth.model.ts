@@ -1,5 +1,5 @@
 export interface LoginRequest {
-  legajo: string;
+  email: string;
   password: string;
 }
 
