@@ -1,29 +1,100 @@
-.page-heading,
+.dashboard-filters,
 .metrics-grid,
-.content-grid {
-  margin-bottom: 22px;
+.chart-grid,
+.wide-panel,
+.section-title {
+  margin-bottom: 20px;
 }
 
-.page-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+.dashboard-filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
 
-  small {
-    color: #64747c;
-    font-weight: 700;
+.filter-card,
+.chart-panel,
+.empty-state {
+  border: 1px solid #dbe4e7;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.filter-card {
+  min-height: 126px;
+  padding: 14px;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+    color: #172126;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
   }
 
-  h1 {
-    margin: 0;
+  i {
+    color: #2563eb;
   }
 
   button {
-    min-height: 42px;
-    padding: 0 16px;
-    border: 1px solid #cdd9dd;
-    border-radius: 8px;
+    height: 26px;
+    padding: 0 8px;
+    border: 1px solid #dbeafe;
+    border-radius: 4px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 0.64rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  span {
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px;
+    border-radius: 4px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 0.74rem;
+    font-weight: 800;
+  }
+}
+
+.date-card {
+  display: grid;
+  gap: 8px;
+
+  label {
+    display: grid;
+    gap: 3px;
+    color: #ffffff;
+    font-size: 0.64rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    background: #4f46e5;
+    border: 2px solid #0f172a;
+    border-radius: 4px;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  input {
+    min-height: 34px;
+    border: 0;
+    padding: 0 10px;
+    text-align: center;
+    color: #172126;
     background: #ffffff;
     font-weight: 800;
   }
@@ -32,58 +103,91 @@
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
 }
 
-.content-grid {
+.chart-grid {
   display: grid;
+  gap: 18px;
+}
+
+.chart-grid.primary,
+.chart-grid.secondary {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
 }
 
-.compact {
-  margin-top: 16px;
-}
+.chart-panel {
+  min-height: 290px;
+  padding: 16px;
 
-.data-panel {
-  min-height: 240px;
-  padding: 18px;
-  border: 1px solid #dbe4e7;
-  border-radius: 8px;
-  background: #ffffff;
-
-  header,
-  .bar-row {
+  header {
+    min-height: 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    margin-bottom: 8px;
   }
 
-  header {
-    margin-bottom: 14px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #edf2f4;
-  }
-
-  header span,
-  .bar-row span {
-    color: #64747c;
-  }
-
-  .bar-row {
-    min-height: 38px;
-    border-bottom: 1px solid #f1f4f5;
-  }
-
-  .bar-row:last-child {
-    border-bottom: 0;
+  strong {
+    color: #172126;
+    font-size: 0.78rem;
+    text-transform: uppercase;
   }
 }
 
-@media (max-width: 1100px) {
-  .metrics-grid,
-  .content-grid {
+.wide-panel {
+  min-height: 320px;
+}
+
+.chart {
+  width: 100%;
+  height: 230px;
+}
+
+.chart.large {
+  height: 270px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  color: #172126;
+  text-transform: uppercase;
+
+  span {
+    width: 5px;
+    height: 26px;
+    border-radius: 2px;
+    background: #2563eb;
+  }
+}
+
+.empty-state {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  color: #64748b;
+  font-weight: 800;
+}
+
+@media (max-width: 1180px) {
+  .dashboard-filters,
+  .metrics-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .chart-grid.primary,
+  .chart-grid.secondary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-filters,
+  .metrics-grid {
+    grid-template-columns: 1fr;
   }
 }

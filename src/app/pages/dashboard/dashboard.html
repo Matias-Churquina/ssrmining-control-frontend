@@ -1,64 +1,121 @@
-<section class="page-heading">
-  <div>
-    <small>Dashboard</small>
-    <h1>Resumen operativo</h1>
-  </div>
-  <button type="button">Exportar</button>
+<section class="dashboard-filters">
+  <article class="filter-card">
+    <header>
+      <span><i class="bi bi-truck"></i> Flota</span>
+      <button type="button">Limpiar</button>
+    </header>
+    <div class="chip-list">
+      @for (item of flota(); track item) {
+        <span>{{ item }}</span>
+      }
+    </div>
+  </article>
+
+  <article class="filter-card">
+    <header>
+      <span><i class="bi bi-diagram-3"></i> Fases</span>
+      <button type="button">Limpiar</button>
+    </header>
+    <div class="chip-list">
+      @for (item of fases(); track item) {
+        <span>{{ item }}</span>
+      }
+    </div>
+  </article>
+
+  <article class="filter-card">
+    <header>
+      <span><i class="bi bi-people"></i> Operadores</span>
+      <button type="button">Limpiar</button>
+    </header>
+    <div class="chip-list">
+      @for (item of operadores(); track item) {
+        <span>{{ item }}</span>
+      }
+    </div>
+  </article>
+
+  <article class="filter-card date-card">
+    <header>
+      <span><i class="bi bi-calendar3"></i> Rango de fechas</span>
+      <button type="button" (click)="cargarDashboard()">Aplicar</button>
+    </header>
+    <label>
+      Desde
+      <input type="date" [value]="fechaDesde()" (change)="fechaDesde.set($any($event.target).value)" />
+    </label>
+    <label>
+      Hasta
+      <input type="date" [value]="fechaHasta()" (change)="fechaHasta.set($any($event.target).value)" />
+    </label>
+  </article>
 </section>
 
 <section class="metrics-grid">
-  <app-metric-tile label="Metros totales" [value]="resumen()?.kpis?.metrosTotales ?? 0" hint="Perforados en filtros activos" />
-  <app-metric-tile label="Pozos" [value]="resumen()?.kpis?.pozosCompletados ?? 0" hint="Registros considerados" />
-  <app-metric-tile label="ROP promedio" [value]="resumen()?.kpis?.ropPromedio ?? 0" hint="m/h operacional" />
-  <app-metric-tile label="Adherencia" [value]="(resumen()?.kpis?.adherenciaDiseno ?? 0) + '%'" hint="Diseno vs real" />
+  <app-metric-tile label="Metros totales" [value]="(resumen()?.kpis?.metrosTotales ?? 0) + ' m'" hint="Perforados" />
+  <app-metric-tile label="Pozos completados" [value]="resumen()?.kpis?.pozosCompletados ?? 0" hint="Registros" />
+  <app-metric-tile label="ROP promedio" [value]="(resumen()?.kpis?.ropPromedio ?? 0) + ' m/h'" hint="Global" />
+  <app-metric-tile label="Adherencia diseno" [value]="(resumen()?.kpis?.adherenciaDiseno ?? 0) + '%'" hint="QA/QC" />
 </section>
 
-<section class="content-grid">
-  <article class="data-panel">
+@if (cargando()) {
+  <section class="empty-state">Cargando dashboard operativo...</section>
+} @else {
+  <section class="chart-grid primary">
+    <article class="chart-panel">
+      <header>
+        <strong>Metros por formacion</strong>
+      </header>
+      <div echarts [options]="metrosPorRocaOption()" class="chart"></div>
+    </article>
+
+    <article class="chart-panel">
+      <header>
+        <strong>Distribucion por tipologia</strong>
+      </header>
+      <div echarts [options]="tipologiaOption()" class="chart"></div>
+    </article>
+
+    <article class="chart-panel">
+      <header>
+        <strong>ROP comparativa (m/h)</strong>
+      </header>
+      <div echarts [options]="ropOption()" class="chart"></div>
+    </article>
+  </section>
+
+  <section class="chart-panel wide-panel">
     <header>
-      <strong>Metros por equipo</strong>
-      <span>m perforados</span>
+      <strong>Ranking de operadores por tipo de roca</strong>
     </header>
+    <div echarts [options]="rankingOption()" class="chart large"></div>
+  </section>
 
-    @for (item of resumen()?.graficos?.metrosPorEquipo ?? []; track item.name) {
-      <div class="bar-row">
-        <span>{{ item.name }}</span>
-        <strong>{{ item.value }}</strong>
-      </div>
-    }
-  </article>
+  <section class="section-title">
+    <span></span>
+    <strong>Control de precision y adherencia</strong>
+  </section>
 
-  <article class="data-panel">
-    <header>
-      <strong>Ranking operadores</strong>
-      <span>produccion</span>
-    </header>
+  <section class="chart-grid secondary">
+    <article class="chart-panel">
+      <header>
+        <strong>Diseno vs perforado por fase</strong>
+      </header>
+      <div echarts [options]="faseOption()" class="chart"></div>
+    </article>
 
-    @for (item of resumen()?.graficos?.rankingOperadores ?? []; track item.name) {
-      <div class="bar-row">
-        <span>{{ item.name }}</span>
-        <strong>{{ item.value }}</strong>
-      </div>
-    }
-  </article>
+    <article class="chart-panel">
+      <header>
+        <strong>Diseno vs real por banco</strong>
+      </header>
+      <div echarts [options]="bancoOption()" class="chart"></div>
+    </article>
 
-  <article class="data-panel">
-    <header>
-      <strong>Tipo de pozo</strong>
-      <span>cantidad</span>
-    </header>
-
-    @for (item of resumen()?.graficos?.distribucionTipoPozo ?? []; track item.name) {
-      <div class="bar-row">
-        <span>{{ item.name }}</span>
-        <strong>{{ item.value }}</strong>
-      </div>
-    }
-  </article>
-</section>
-
-<section class="content-grid compact">
-  <app-status-card title="Calidad de datos" status="Activo" description="Los KPIs se alimentan desde perforaciones reales del backend V1." />
-  <app-status-card title="Datos demo" status="Cargados" description="Seed local con usuarios, equipos y perforaciones en distintos estados." />
-  <app-status-card title="Operacion tablet" status="Base lista" description="Layout responsive preparado para recorridos operativos en campo." />
-</section>
+    <article class="chart-panel">
+      <header>
+        <strong>Perforado vs real por operador</strong>
+      </header>
+      <div echarts [options]="operadorOption()" class="chart"></div>
+    </article>
+  </section>
+}
