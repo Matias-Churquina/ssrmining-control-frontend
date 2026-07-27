@@ -3,8 +3,55 @@
     <small>Operacion</small>
     <h1>Equipos de perforacion</h1>
   </div>
-  <button type="button">Nuevo equipo</button>
+  <button type="button" (click)="toggleFormulario()">{{ mostrarFormulario() ? 'Cerrar' : 'Nuevo equipo' }}</button>
 </section>
+
+@if (mostrarFormulario()) {
+  <section class="form-panel">
+    <header>
+      <strong>Alta de equipo</strong>
+      <span>Inventario operativo</span>
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="crearEquipo()">
+      <label>
+        Codigo
+        <input type="text" formControlName="codigo" />
+      </label>
+
+      <label>
+        Descripcion
+        <input type="text" formControlName="descripcion" />
+      </label>
+
+      <label>
+        Modelo
+        <input type="text" formControlName="modelo" />
+      </label>
+
+      <label>
+        Estado
+        <select formControlName="estado">
+          <option value="ACTIVO">ACTIVO</option>
+          <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+          <option value="INACTIVO">INACTIVO</option>
+        </select>
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="guardando()">{{ guardando() ? 'Guardando...' : 'Crear equipo' }}</button>
+      </div>
+    </form>
+  </section>
+}
+
+@if (mensaje()) {
+  <div class="feedback success">{{ mensaje() }}</div>
+}
+
+@if (error()) {
+  <div class="feedback error">{{ error() }}</div>
+}
 
 <section class="table-panel">
   <header>

@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { AuthUser, LoginResponse } from '../models/auth.model';
+import { AuthUser, LoginResponse, UserRole } from '../models/auth.model';
 
 const TOKEN_KEY = 'ssrmining_token';
 const USER_KEY = 'ssrmining_user';
@@ -14,6 +14,27 @@ export class SesionService {
 
   get estaAutenticado(): boolean {
     return Boolean(this.token);
+  }
+
+  get rolActual(): UserRole | null {
+    return (this.usuarioActual()?.rol as UserRole | undefined) ?? null;
+  }
+
+  puedeAcceder(roles: UserRole[]): boolean {
+    const rol = this.rolActual;
+    return Boolean(rol && roles.includes(rol));
+  }
+
+  rutaInicial(): string {
+    if (this.rolActual === 'OPERADOR') {
+      return '/perforaciones';
+    }
+
+    if (this.rolActual === 'SUPERVISOR') {
+      return '/revision-supervisor';
+    }
+
+    return '/dashboard';
   }
 
   guardarSesion(response: LoginResponse): void {

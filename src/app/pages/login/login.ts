@@ -32,9 +32,18 @@ export class Login {
     this.error.set(null);
 
     this.authService.login(this.form.getRawValue()).subscribe({
-      next: () => void this.router.navigate(['/dashboard']),
+      next: (response) => {
+        const rol = response.usuario.rol;
+        const route = rol === 'OPERADOR'
+          ? '/perforaciones'
+          : rol === 'SUPERVISOR'
+            ? '/revision-supervisor'
+            : '/dashboard';
+
+        void this.router.navigate([route]);
+      },
       error: () => {
-        this.error.set('No se pudo iniciar sesion. Verifica legajo y contrasena.');
+        this.error.set('No se pudo iniciar sesion. Verifica email y contrasena.');
         this.cargando.set(false);
       }
     });

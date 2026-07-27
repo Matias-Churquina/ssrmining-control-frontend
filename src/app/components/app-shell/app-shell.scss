@@ -28,12 +28,9 @@
 .brand-mark {
   width: 48px;
   height: 48px;
-  display: grid;
-  place-items: center;
   border-radius: 8px;
-  background: #f4b740;
-  color: #172126;
-  font-weight: 800;
+  object-fit: contain;
+  background: #ffffff;
 }
 
 .nav-list {
