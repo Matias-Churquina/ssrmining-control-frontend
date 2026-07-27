@@ -16,11 +16,16 @@ export class Login {
 
   readonly cargando = signal(false);
   readonly error = signal<string | null>(null);
+  readonly mostrarPassword = signal(false);
 
   readonly form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
   });
+
+  togglePassword(): void {
+    this.mostrarPassword.update((value) => !value);
+  }
 
   ingresar(): void {
     if (this.form.invalid || this.cargando()) {

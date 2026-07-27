@@ -1,1 +1,204 @@
 @use '../shared-page';
+
+.drill-form-card {
+  margin-bottom: 22px;
+  padding: 30px;
+  border: 1px solid #dbe4e7;
+  border-top: 5px solid #2563eb;
+  border-radius: 28px;
+  background: #ffffff;
+}
+
+.form-section {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8eef1;
+
+  + .form-section {
+    padding-top: 24px;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    color: #172126;
+
+    i {
+      color: #2563eb;
+      font-size: 1.2rem;
+    }
+
+    strong {
+      letter-spacing: 0.02em;
+    }
+  }
+}
+
+.ghost-action {
+  margin-left: auto;
+    min-height: 34px;
+    padding: 0 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-weight: 800;
+}
+
+.field-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.general-grid {
+  grid-template-columns: 190px minmax(260px, 1fr) 190px;
+}
+
+.context-grid {
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+}
+
+.wide-field {
+  grid-column: span 2;
+}
+
+.compact-field {
+  min-width: 0;
+}
+
+.field {
+  display: grid;
+  border: 2px solid #0f172a;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+
+  span {
+    min-height: 34px;
+    display: grid;
+    place-items: center;
+    padding: 0 10px;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-align: center;
+  }
+
+  input,
+  select {
+    width: 100%;
+    height: 50px;
+    border: 0;
+    padding: 0 14px;
+    color: #172126;
+    background: #f8fbfc;
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  input[readonly] {
+    background: #eef4f6;
+  }
+}
+
+.field.dark span {
+  background: #172126;
+}
+
+.field.sticky span {
+  background: #2563eb;
+}
+
+.field.purple span {
+  background: #4f46e5;
+}
+
+.time-section {
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+  border-bottom: 0;
+}
+
+.time-grid {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.time-field {
+  width: 130px;
+}
+
+.observations {
+  width: min(760px, 100%);
+  display: grid;
+  gap: 8px;
+  color: #2c3f47;
+  font-weight: 800;
+
+  textarea {
+    width: 100%;
+    min-height: 84px;
+    padding: 12px 14px;
+    border: 1px solid #ccd8dc;
+    border-radius: 8px;
+    resize: vertical;
+  }
+}
+
+.save-button {
+  min-width: 290px;
+  min-height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 12px;
+  background: #ea580c;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1180px) {
+  .general-grid,
+  .context-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wide-field {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .drill-form-card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .general-grid,
+  .context-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .time-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .time-field {
+    width: auto;
+  }
+
+  .save-button {
+    width: 100%;
+    min-width: 0;
+  }
+}
