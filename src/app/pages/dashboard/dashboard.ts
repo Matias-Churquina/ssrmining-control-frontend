@@ -39,9 +39,9 @@ export class Dashboard {
   readonly fechaDesde = signal('2026-07-01');
   readonly fechaHasta = signal('2026-07-31');
 
-  readonly flota = computed(() => this.resumen()?.graficos.metrosPorEquipo.map((item) => item.name) ?? []);
-  readonly fases = computed(() => this.resumen()?.graficos.metrosPorFase.map((item) => item.name) ?? []);
-  readonly operadores = computed(() => this.resumen()?.graficos.rankingOperadores.map((item) => item.name) ?? []);
+  readonly flota = computed(() => this.resumen()?.opciones.equipos ?? []);
+  readonly fases = computed(() => this.resumen()?.opciones.fases ?? []);
+  readonly operadores = computed(() => this.resumen()?.opciones.operadores ?? []);
 
   readonly metrosPorRocaOption = computed(() => this.donutOption(
     this.resumen()?.graficos.metrosPorRoca ?? [],
@@ -74,37 +74,37 @@ export class Dashboard {
   });
 
   readonly faseOption = computed(() => {
-    const fases = this.resumen()?.graficos.metrosPorFase ?? [];
+    const fases = this.resumen()?.graficos.precisionPorFase ?? [];
 
     return this.groupedBarOption(
       fases.map((item) => item.name),
       [
-        { name: 'Diseno', values: fases.map((item) => Number((item.value * 1.04).toFixed(2))), color: '#1f2937' },
-        { name: 'Perforado', values: fases.map((item) => item.value), color: '#3b82f6' }
+        { name: 'Diseno', values: fases.map((item) => item.diseno), color: '#334155' },
+        { name: 'Perforado', values: fases.map((item) => item.perforado), color: '#3b82f6' }
       ]
     );
   });
 
   readonly bancoOption = computed(() => {
-    const bancos = this.resumen()?.graficos.metrosPorBanco ?? [];
+    const bancos = this.resumen()?.graficos.precisionPorBanco ?? [];
 
     return this.groupedBarOption(
       bancos.map((item) => `B-${item.name}`),
       [
-        { name: 'Diseno', values: bancos.map((item) => Number((item.value * 1.03).toFixed(2))), color: '#1f2937' },
-        { name: 'Real', values: bancos.map((item) => item.value), color: '#f97316' }
+        { name: 'Diseno', values: bancos.map((item) => item.diseno), color: '#334155' },
+        { name: 'Real', values: bancos.map((item) => item.real), color: '#d97706' }
       ]
     );
   });
 
   readonly operadorOption = computed(() => {
-    const ranking = this.resumen()?.graficos.rankingOperadores ?? [];
+    const ranking = this.resumen()?.graficos.precisionPorOperador ?? [];
 
     return this.horizontalBarOption(
       ranking.map((item) => this.shortName(item.name)),
       [
-        { name: 'Perforado', values: ranking.map((item) => item.value), color: '#3b82f6' },
-        { name: 'Real', values: ranking.map((item) => Number((item.value * 0.96).toFixed(2))), color: '#f97316' }
+        { name: 'Perforado', values: ranking.map((item) => item.perforado), color: '#3b82f6' },
+        { name: 'Real', values: ranking.map((item) => item.real), color: '#d97706' }
       ],
       'm'
     );

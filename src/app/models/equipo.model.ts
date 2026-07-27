@@ -9,3 +9,9 @@ export interface Equipo {
   fechaAlta?: string;
   fechaActualizacion?: string;
 }
+
+export interface EquipoOption {
+  idEquipo: number;
+  codigo: string;
+  modelo?: string;
+}

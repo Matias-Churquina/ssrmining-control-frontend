@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { ApiResponse } from '../models/api-response.model';
-import { Equipo, EstadoEquipo } from '../models/equipo.model';
+import { Equipo, EquipoOption, EstadoEquipo } from '../models/equipo.model';
 
 @Injectable({ providedIn: 'root' })
 export class EquipoService {
@@ -13,6 +13,10 @@ export class EquipoService {
 
   listar(): Observable<Equipo[]> {
     return this.http.get<ApiResponse<Equipo[]>>(this.apiUrl).pipe(map((response) => response.data));
+  }
+
+  listarOpciones(): Observable<EquipoOption[]> {
+    return this.http.get<ApiResponse<EquipoOption[]>>(`${this.apiUrl}/opciones`).pipe(map((response) => response.data));
   }
 
   obtenerPorId(idEquipo: number): Observable<Equipo> {

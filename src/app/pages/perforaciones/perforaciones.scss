@@ -2,10 +2,10 @@
 
 .drill-form-card {
   margin-bottom: 22px;
-  padding: 30px;
+  padding: 26px;
   border: 1px solid #dbe4e7;
-  border-top: 5px solid #2563eb;
-  border-radius: 28px;
+  border-top: 4px solid #7aa3d8;
+  border-radius: 12px;
   background: #ffffff;
 }
 
@@ -21,16 +21,16 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     color: #172126;
 
     i {
-      color: #2563eb;
-      font-size: 1.2rem;
+      color: #527aa4;
+      font-size: 1rem;
     }
 
     strong {
-      letter-spacing: 0.02em;
+      font-weight: 700;
     }
   }
 }
@@ -39,11 +39,11 @@
   margin-left: auto;
     min-height: 34px;
     padding: 0 12px;
-  border: 1px solid #dbeafe;
+  border: 1px solid #cbd8e3;
   border-radius: 8px;
-  background: #eff6ff;
-  color: #2563eb;
-  font-weight: 800;
+  background: #f7fafc;
+  color: #38556d;
+  font-weight: 700;
 }
 
 .field-grid {
@@ -69,7 +69,7 @@
 
 .field {
   display: grid;
-  border: 2px solid #0f172a;
+  border: 1px solid #c9d4dc;
   border-radius: 8px;
   overflow: hidden;
   background: #ffffff;
@@ -79,9 +79,9 @@
     display: grid;
     place-items: center;
     padding: 0 10px;
-    color: #ffffff;
+    color: #21313b;
     font-size: 0.75rem;
-    font-weight: 900;
+    font-weight: 700;
     text-align: center;
   }
 
@@ -92,27 +92,27 @@
     border: 0;
     padding: 0 14px;
     color: #172126;
-    background: #f8fbfc;
-    font-size: 1.05rem;
-    font-weight: 800;
+    background: #f8fafb;
+    font-size: 1rem;
+    font-weight: 600;
     text-align: center;
   }
 
   input[readonly] {
-    background: #eef4f6;
+    background: #f0f4f6;
   }
 }
 
 .field.dark span {
-  background: #172126;
+  background: #e8eef2;
 }
 
 .field.sticky span {
-  background: #2563eb;
+  background: #d9e8f6;
 }
 
 .field.purple span {
-  background: #4f46e5;
+  background: #e1ddf3;
 }
 
 .time-section {
@@ -158,10 +158,10 @@
   gap: 10px;
   border: 0;
   border-radius: 12px;
-  background: #ea580c;
+  background: #d95f18;
   color: #ffffff;
   font-size: 1rem;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
