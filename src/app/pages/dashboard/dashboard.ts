@@ -11,7 +11,7 @@ import { LabelLayout } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
 import { MetricTile } from '../../components/metric-tile/metric-tile';
-import { DashboardResumen, NumericGroup } from '../../models/dashboard.model';
+import { DashboardOption, DashboardResumen, NumericGroup } from '../../models/dashboard.model';
 import { DashboardService } from '../../services/dashboard.service';
 
 echarts.use([
@@ -38,6 +38,9 @@ export class Dashboard {
   readonly cargando = signal(true);
   readonly fechaDesde = signal('2026-07-01');
   readonly fechaHasta = signal('2026-07-31');
+  readonly selectedEquipoId = signal<number | null>(null);
+  readonly selectedFase = signal<string | null>(null);
+  readonly selectedOperadorId = signal<number | null>(null);
 
   readonly flota = computed(() => this.resumen()?.opciones.equipos ?? []);
   readonly fases = computed(() => this.resumen()?.opciones.fases ?? []);
@@ -118,7 +121,10 @@ export class Dashboard {
     this.cargando.set(true);
     this.dashboardService.obtenerResumen({
       fechaDesde: this.fechaDesde(),
-      fechaHasta: this.fechaHasta()
+      fechaHasta: this.fechaHasta(),
+      idEquipo: this.selectedEquipoId() ?? undefined,
+      fase: this.selectedFase() ?? undefined,
+      idUsuarioRegistro: this.selectedOperadorId() ?? undefined
     }).subscribe({
       next: (resumen) => {
         this.resumen.set(resumen);
@@ -126,6 +132,48 @@ export class Dashboard {
       },
       error: () => this.cargando.set(false)
     });
+  }
+
+  seleccionarEquipo(equipo: DashboardOption): void {
+    this.selectedEquipoId.set(this.selectedEquipoId() === equipo.id ? null : equipo.id);
+    this.cargarDashboard();
+  }
+
+  seleccionarFase(fase: string): void {
+    this.selectedFase.set(this.selectedFase() === fase ? null : fase);
+    this.cargarDashboard();
+  }
+
+  seleccionarOperador(operador: DashboardOption): void {
+    this.selectedOperadorId.set(this.selectedOperadorId() === operador.id ? null : operador.id);
+    this.cargarDashboard();
+  }
+
+  limpiarFlota(): void {
+    if (this.selectedEquipoId() === null) {
+      return;
+    }
+
+    this.selectedEquipoId.set(null);
+    this.cargarDashboard();
+  }
+
+  limpiarFases(): void {
+    if (this.selectedFase() === null) {
+      return;
+    }
+
+    this.selectedFase.set(null);
+    this.cargarDashboard();
+  }
+
+  limpiarOperadores(): void {
+    if (this.selectedOperadorId() === null) {
+      return;
+    }
+
+    this.selectedOperadorId.set(null);
+    this.cargarDashboard();
   }
 
   private donutOption(data: NumericGroup[], colors: string[]): EChartsCoreOption {

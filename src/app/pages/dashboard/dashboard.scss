@@ -40,7 +40,7 @@
     color: #2563eb;
   }
 
-  button {
+  header > button {
     height: 26px;
     padding: 0 8px;
     border: 1px solid #dbeafe;
@@ -50,6 +50,12 @@
     font-size: 0.64rem;
     font-weight: 800;
     text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  header > button:disabled {
+    cursor: default;
+    opacity: 0.48;
   }
 }
 
@@ -58,15 +64,31 @@
   flex-wrap: wrap;
   gap: 8px;
 
-  span {
+  .chip {
     min-height: 28px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     padding: 0 10px;
+    border: 1px solid #d7e0e5;
     border-radius: 4px;
+    background: #f8fbfc;
+    color: #253745;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .chip:hover {
+    border-color: #9db4c2;
+    background: #eef5f8;
+  }
+
+  .chip.active {
+    border-color: #2563eb;
     background: #2563eb;
     color: #ffffff;
-    font-size: 0.74rem;
     font-weight: 800;
   }
 }

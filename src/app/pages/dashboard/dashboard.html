@@ -2,11 +2,18 @@
   <article class="filter-card">
     <header>
       <span><i class="bi bi-truck"></i> Flota</span>
-      <button type="button">Limpiar</button>
+      <button type="button" (click)="limpiarFlota()" [disabled]="selectedEquipoId() === null">Limpiar</button>
     </header>
     <div class="chip-list">
-      @for (item of flota(); track item) {
-        <span>{{ item }}</span>
+      @for (item of flota(); track item.id) {
+        <button
+          type="button"
+          class="chip"
+          [class.active]="selectedEquipoId() === item.id"
+          (click)="seleccionarEquipo(item)"
+        >
+          {{ item.label }}
+        </button>
       }
     </div>
   </article>
@@ -14,11 +21,18 @@
   <article class="filter-card">
     <header>
       <span><i class="bi bi-diagram-3"></i> Fases</span>
-      <button type="button">Limpiar</button>
+      <button type="button" (click)="limpiarFases()" [disabled]="selectedFase() === null">Limpiar</button>
     </header>
     <div class="chip-list">
       @for (item of fases(); track item) {
-        <span>{{ item }}</span>
+        <button
+          type="button"
+          class="chip"
+          [class.active]="selectedFase() === item"
+          (click)="seleccionarFase(item)"
+        >
+          {{ item }}
+        </button>
       }
     </div>
   </article>
@@ -26,11 +40,18 @@
   <article class="filter-card">
     <header>
       <span><i class="bi bi-people"></i> Operadores</span>
-      <button type="button">Limpiar</button>
+      <button type="button" (click)="limpiarOperadores()" [disabled]="selectedOperadorId() === null">Limpiar</button>
     </header>
     <div class="chip-list">
-      @for (item of operadores(); track item) {
-        <span>{{ item }}</span>
+      @for (item of operadores(); track item.id) {
+        <button
+          type="button"
+          class="chip"
+          [class.active]="selectedOperadorId() === item.id"
+          (click)="seleccionarOperador(item)"
+        >
+          {{ item.label }}
+        </button>
       }
     </div>
   </article>
