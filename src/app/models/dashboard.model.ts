@@ -8,8 +8,8 @@ export interface DashboardResumen {
   };
   opciones: {
     fases: string[];
-    equipos: string[];
-    operadores: string[];
+    equipos: DashboardOption[];
+    operadores: DashboardOption[];
   };
   graficos: {
     metrosPorRoca: NumericGroup[];
@@ -24,6 +24,11 @@ export interface DashboardResumen {
     precisionPorOperador: PrecisionGroup[];
     ropPorRoca: Array<{ name: string; ropPromedio: number }>;
   };
+}
+
+export interface DashboardOption {
+  id: number;
+  label: string;
 }
 
 export interface NumericGroup {
