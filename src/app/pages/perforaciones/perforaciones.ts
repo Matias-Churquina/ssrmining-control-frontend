@@ -1,9 +1,23 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Equipo } from '../../models/equipo.model';
+import { EquipoOption } from '../../models/equipo.model';
 import { Perforacion } from '../../models/perforacion.model';
+import { NotificationService } from '../../core/notifications/notification.service';
 import { EquipoService } from '../../services/equipo.service';
 import { PerforacionService } from '../../services/perforacion.service';
+import { SesionService } from '../../services/sesion.service';
+
+const CONTEXT_KEY = 'ssrmining_perforacion_context';
+
+type PerforacionContext = {
+  fecha: string;
+  idEquipo: number;
+  fase: string;
+  banco: number;
+  malla: string;
+  idPozo: string;
+  tipoRoca: string;
+};
 
 @Component({
   selector: 'app-perforaciones',
@@ -14,14 +28,20 @@ import { PerforacionService } from '../../services/perforacion.service';
 export class Perforaciones {
   private readonly fb = inject(FormBuilder);
   private readonly equipoService = inject(EquipoService);
+  private readonly notifications = inject(NotificationService);
   private readonly perforacionService = inject(PerforacionService);
+  private readonly sesion = inject(SesionService);
+  private persistenciaPausada = false;
 
+  readonly usuario = this.sesion.usuarioActual;
   readonly perforaciones = signal<Perforacion[]>([]);
-  readonly equiposActivos = signal<Equipo[]>([]);
-  readonly mostrarFormulario = signal(false);
+  readonly equiposActivos = signal<EquipoOption[]>([]);
+  readonly mostrarFormulario = signal(true);
   readonly guardando = signal(false);
-  readonly mensaje = signal<string | null>(null);
-  readonly error = signal<string | null>(null);
+
+  readonly equipoSeleccionado = computed(() =>
+    this.equiposActivos().find((equipo) => equipo.idEquipo === Number(this.form.controls.idEquipo.value))
+  );
 
   readonly form = this.fb.nonNullable.group({
     codigoPerforacion: [''],
@@ -42,18 +62,44 @@ export class Perforaciones {
   });
 
   constructor() {
+    this.restaurarContexto();
     this.cargarDatos();
+
+    this.form.valueChanges.subscribe(() => this.guardarContexto());
   }
 
   toggleFormulario(): void {
     this.mostrarFormulario.update((value) => !value);
-    this.mensaje.set(null);
-    this.error.set(null);
+  }
+
+  limpiarContexto(): void {
+    this.persistenciaPausada = true;
+    localStorage.removeItem(CONTEXT_KEY);
+    this.form.reset({
+      codigoPerforacion: '',
+      fecha: new Date().toISOString().slice(0, 10),
+      fase: 'Fase 8',
+      banco: 4110,
+      malla: 'M-01',
+      idPozo: '',
+      tipoRoca: 'Toba blanda',
+      profundidadDiseno: 10,
+      metrosPerforados: 10,
+      profundidadReal: 10,
+      horaInicio: '08:00',
+      horaFin: '08:30',
+      tipoPozo: 'Produccion',
+      observaciones: '',
+      idEquipo: 0
+    });
+    this.persistenciaPausada = false;
+    this.notifications.info('Contexto de fase reiniciado.');
   }
 
   crearPerforacion(): void {
     if (this.form.invalid || this.guardando()) {
       this.form.markAllAsTouched();
+      this.notifications.warning('Completa los campos requeridos antes de guardar.');
       return;
     }
 
@@ -70,44 +116,28 @@ export class Perforaciones {
     };
 
     this.guardando.set(true);
-    this.mensaje.set(null);
-    this.error.set(null);
 
     this.perforacionService.crear(payload).subscribe({
       next: () => {
-        this.form.reset({
-          codigoPerforacion: '',
-          fecha: new Date().toISOString().slice(0, 10),
-          fase: 'Fase 8',
-          banco: 4110,
-          malla: 'M-01',
-          idPozo: '',
-          tipoRoca: 'Toba blanda',
-          profundidadDiseno: 10,
-          metrosPerforados: 10,
-          profundidadReal: 10,
-          horaInicio: '08:00',
-          horaFin: '08:30',
-          tipoPozo: 'Produccion',
-          observaciones: '',
-          idEquipo: 0
-        });
-        this.mensaje.set('Perforacion registrada correctamente y enviada a revision.');
-        this.mostrarFormulario.set(false);
+        this.notifications.success('Pozo guardado. El contexto de fase se mantiene activo.');
         this.guardando.set(false);
+        this.limpiarRegistroPozo();
         this.cargarPerforaciones();
       },
       error: () => {
-        this.error.set('No se pudo registrar la perforacion. Revisa equipo, profundidades y datos obligatorios.');
+        this.notifications.error('No se pudo registrar la perforacion. Revisa equipo, profundidades y datos obligatorios.');
         this.guardando.set(false);
       }
     });
   }
 
   private cargarDatos(): void {
-    this.equipoService.listar().subscribe({
-      next: (equipos) => this.equiposActivos.set(equipos.filter((equipo) => equipo.estado === 'ACTIVO')),
-      error: () => this.equiposActivos.set([])
+    this.equipoService.listarOpciones().subscribe({
+      next: (equipos) => this.equiposActivos.set(equipos),
+      error: () => {
+        this.equiposActivos.set([]);
+        this.notifications.error('No se pudieron cargar las opciones de equipos.');
+      }
     });
     this.cargarPerforaciones();
   }
@@ -117,5 +147,48 @@ export class Perforaciones {
       next: (perforaciones) => this.perforaciones.set(perforaciones),
       error: () => this.perforaciones.set([])
     });
+  }
+
+  private limpiarRegistroPozo(): void {
+    this.form.patchValue({
+      codigoPerforacion: '',
+      profundidadDiseno: 10,
+      metrosPerforados: 10,
+      profundidadReal: 10,
+      horaInicio: '08:00',
+      horaFin: '08:30',
+      tipoPozo: 'Produccion',
+      observaciones: ''
+    });
+  }
+
+  private guardarContexto(): void {
+    if (this.persistenciaPausada) {
+      return;
+    }
+
+    const raw = this.form.getRawValue();
+    const context: PerforacionContext = {
+      fecha: raw.fecha,
+      idEquipo: Number(raw.idEquipo),
+      fase: raw.fase,
+      banco: Number(raw.banco),
+      malla: raw.malla,
+      idPozo: raw.idPozo,
+      tipoRoca: raw.tipoRoca
+    };
+
+    localStorage.setItem(CONTEXT_KEY, JSON.stringify(context));
+  }
+
+  private restaurarContexto(): void {
+    const rawContext = localStorage.getItem(CONTEXT_KEY);
+
+    if (!rawContext) {
+      return;
+    }
+
+    const context = JSON.parse(rawContext) as PerforacionContext;
+    this.form.patchValue(context);
   }
 }

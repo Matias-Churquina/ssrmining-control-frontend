@@ -19,7 +19,12 @@
 
       <label>
         Contrasena
-        <input type="password" formControlName="password" autocomplete="current-password" />
+        <span class="password-field">
+          <input [type]="mostrarPassword() ? 'text' : 'password'" formControlName="password" autocomplete="current-password" />
+          <button type="button" class="eye-button" (click)="togglePassword()" [attr.aria-label]="mostrarPassword() ? 'Ocultar contrasena' : 'Mostrar contrasena'">
+            <i class="bi" [class.bi-eye]="!mostrarPassword()" [class.bi-eye-slash]="mostrarPassword()" aria-hidden="true"></i>
+          </button>
+        </span>
       </label>
 
       @if (error()) {
