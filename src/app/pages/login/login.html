@@ -1,7 +1,7 @@
 <main class="login-page">
   <section class="login-panel">
     <div class="brand-row">
-      <span>SR</span>
+      <img src="/ssrminingLOGO.png" alt="SSRMining" />
       <div>
         <strong>SSRMining</strong>
         <small>Control de perforaciones</small>
@@ -13,13 +13,18 @@
       <p>Acceso para administradores, supervisores y operadores autorizados.</p>
 
       <label>
-        Legajo
-        <input type="text" formControlName="legajo" autocomplete="username" />
+        Email
+        <input type="email" formControlName="email" autocomplete="username" />
       </label>
 
       <label>
         Contrasena
-        <input type="password" formControlName="password" autocomplete="current-password" />
+        <span class="password-field">
+          <input [type]="mostrarPassword() ? 'text' : 'password'" formControlName="password" autocomplete="current-password" />
+          <button type="button" class="eye-button" (click)="togglePassword()" [attr.aria-label]="mostrarPassword() ? 'Ocultar contrasena' : 'Mostrar contrasena'">
+            <i class="bi" [class.bi-eye]="!mostrarPassword()" [class.bi-eye-slash]="mostrarPassword()" aria-hidden="true"></i>
+          </button>
+        </span>
       </label>
 
       @if (error()) {

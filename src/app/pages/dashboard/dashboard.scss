@@ -1,29 +1,122 @@
-.page-heading,
+.dashboard-filters,
 .metrics-grid,
-.content-grid {
-  margin-bottom: 22px;
+.chart-grid,
+.wide-panel,
+.section-title {
+  margin-bottom: 20px;
 }
 
-.page-heading {
+.dashboard-filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.filter-card,
+.chart-panel,
+.empty-state {
+  border: 1px solid #dbe4e7;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.filter-card {
+  min-height: 126px;
+  padding: 14px;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+    color: #172126;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  i {
+    color: #2563eb;
+  }
+
+  header > button {
+    height: 26px;
+    padding: 0 8px;
+    border: 1px solid #dbeafe;
+    border-radius: 4px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 0.64rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  header > button:disabled {
+    cursor: default;
+    opacity: 0.48;
+  }
+}
+
+.chip-list {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
 
-  small {
-    color: #64747c;
+  .chip {
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    border: 1px solid #d7e0e5;
+    border-radius: 4px;
+    background: #f8fbfc;
+    color: #253745;
+    font-size: 0.74rem;
     font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
 
-  h1 {
-    margin: 0;
+  .chip:hover {
+    border-color: #9db4c2;
+    background: #eef5f8;
   }
 
-  button {
-    min-height: 42px;
-    padding: 0 16px;
-    border: 1px solid #cdd9dd;
-    border-radius: 8px;
+  .chip.active {
+    border-color: #2563eb;
+    background: #2563eb;
+    color: #ffffff;
+    font-weight: 800;
+  }
+}
+
+.date-card {
+  display: grid;
+  gap: 8px;
+
+  label {
+    display: grid;
+    gap: 3px;
+    color: #ffffff;
+    font-size: 0.64rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    background: #4f46e5;
+    border: 2px solid #0f172a;
+    border-radius: 4px;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  input {
+    min-height: 34px;
+    border: 0;
+    padding: 0 10px;
+    text-align: center;
+    color: #172126;
     background: #ffffff;
     font-weight: 800;
   }
@@ -32,18 +125,91 @@
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
 }
 
-.content-grid {
+.chart-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 18px;
 }
 
-@media (max-width: 1100px) {
-  .metrics-grid,
-  .content-grid {
+.chart-grid.primary,
+.chart-grid.secondary {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.chart-panel {
+  min-height: 290px;
+  padding: 16px;
+
+  header {
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  strong {
+    color: #172126;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+  }
+}
+
+.wide-panel {
+  min-height: 320px;
+}
+
+.chart {
+  width: 100%;
+  height: 230px;
+}
+
+.chart.large {
+  height: 270px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  color: #172126;
+  text-transform: uppercase;
+
+  span {
+    width: 5px;
+    height: 26px;
+    border-radius: 2px;
+    background: #2563eb;
+  }
+}
+
+.empty-state {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  color: #64748b;
+  font-weight: 800;
+}
+
+@media (max-width: 1180px) {
+  .dashboard-filters,
+  .metrics-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .chart-grid.primary,
+  .chart-grid.secondary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-filters,
+  .metrics-grid {
+    grid-template-columns: 1fr;
   }
 }

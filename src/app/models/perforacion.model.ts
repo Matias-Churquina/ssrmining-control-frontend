@@ -22,4 +22,30 @@ export interface Perforacion {
   idSupervisorRevision?: number;
   fechaRevision?: string;
   motivoRechazo?: string;
+  equipo?: {
+    idEquipo: number;
+    codigo: string;
+    descripcion: string;
+    modelo?: string;
+    estado: string;
+  };
+  usuarioRegistro?: {
+    idUsuario: number;
+    legajo: string;
+    nombre: string;
+    apellido: string;
+    email: string;
+  };
+  supervisorRevision?: {
+    idUsuario: number;
+    legajo: string;
+    nombre: string;
+    apellido: string;
+    email: string;
+  };
+  calculos?: {
+    duracionHoras: number;
+    rop: number;
+    adherencia: number;
+  };
 }

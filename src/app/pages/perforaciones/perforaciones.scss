@@ -1,1 +1,204 @@
 @use '../shared-page';
+
+.drill-form-card {
+  margin-bottom: 22px;
+  padding: 26px;
+  border: 1px solid #dbe4e7;
+  border-top: 4px solid #7aa3d8;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.form-section {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8eef1;
+
+  + .form-section {
+    padding-top: 24px;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    color: #172126;
+
+    i {
+      color: #527aa4;
+      font-size: 1rem;
+    }
+
+    strong {
+      font-weight: 700;
+    }
+  }
+}
+
+.ghost-action {
+  margin-left: auto;
+    min-height: 34px;
+    padding: 0 12px;
+  border: 1px solid #cbd8e3;
+  border-radius: 8px;
+  background: #f7fafc;
+  color: #38556d;
+  font-weight: 700;
+}
+
+.field-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.general-grid {
+  grid-template-columns: 190px minmax(260px, 1fr) 190px;
+}
+
+.context-grid {
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+}
+
+.wide-field {
+  grid-column: span 2;
+}
+
+.compact-field {
+  min-width: 0;
+}
+
+.field {
+  display: grid;
+  border: 1px solid #c9d4dc;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+
+  span {
+    min-height: 34px;
+    display: grid;
+    place-items: center;
+    padding: 0 10px;
+    color: #21313b;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  input,
+  select {
+    width: 100%;
+    height: 50px;
+    border: 0;
+    padding: 0 14px;
+    color: #172126;
+    background: #f8fafb;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  input[readonly] {
+    background: #f0f4f6;
+  }
+}
+
+.field.dark span {
+  background: #e8eef2;
+}
+
+.field.sticky span {
+  background: #d9e8f6;
+}
+
+.field.purple span {
+  background: #e1ddf3;
+}
+
+.time-section {
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+  border-bottom: 0;
+}
+
+.time-grid {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.time-field {
+  width: 130px;
+}
+
+.observations {
+  width: min(760px, 100%);
+  display: grid;
+  gap: 8px;
+  color: #2c3f47;
+  font-weight: 800;
+
+  textarea {
+    width: 100%;
+    min-height: 84px;
+    padding: 12px 14px;
+    border: 1px solid #ccd8dc;
+    border-radius: 8px;
+    resize: vertical;
+  }
+}
+
+.save-button {
+  min-width: 290px;
+  min-height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 12px;
+  background: #d95f18;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1180px) {
+  .general-grid,
+  .context-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wide-field {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .drill-form-card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .general-grid,
+  .context-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .time-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .time-field {
+    width: auto;
+  }
+
+  .save-button {
+    width: 100%;
+    min-width: 0;
+  }
+}

@@ -1,10 +1,136 @@
 <section class="page-heading">
   <div>
-    <small>Registro</small>
+    <small>Registro operativo</small>
     <h1>Perforaciones</h1>
   </div>
-  <button type="button">Nueva perforacion</button>
+  <button type="button" (click)="toggleFormulario()">{{ mostrarFormulario() ? 'Ocultar formulario' : 'Registrar pozo' }}</button>
 </section>
+
+@if (mostrarFormulario()) {
+  <section class="drill-form-card">
+    <form [formGroup]="form" (ngSubmit)="crearPerforacion()">
+      <section class="form-section">
+        <header>
+          <i class="bi bi-person"></i>
+          <strong>Datos generales</strong>
+        </header>
+
+        <div class="field-grid general-grid">
+          <label class="field dark">
+            <span>Legajo</span>
+            <input type="text" [value]="usuario()?.legajo || ''" readonly />
+          </label>
+
+          <label class="field dark wide-field">
+            <span>Operador</span>
+            <input type="text" [value]="(usuario()?.nombre || '') + ' ' + (usuario()?.apellido || '')" readonly />
+          </label>
+
+          <label class="field dark">
+            <span>Equipo</span>
+            <select formControlName="idEquipo">
+              <option [ngValue]="0">Seleccionar</option>
+              @for (equipo of equiposActivos(); track equipo.idEquipo) {
+                <option [ngValue]="equipo.idEquipo">{{ equipo.codigo }}</option>
+              }
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <header>
+          <i class="bi bi-mountains"></i>
+          <strong>Parametros y geologia</strong>
+          <button type="button" class="ghost-action" (click)="limpiarContexto()">Cambiar fase</button>
+        </header>
+
+        <div class="field-grid context-grid">
+          <label class="field sticky">
+            <span>Fecha</span>
+            <input type="date" formControlName="fecha" />
+          </label>
+
+          <label class="field sticky">
+            <span>Fase</span>
+            <input type="text" formControlName="fase" />
+          </label>
+
+          <label class="field sticky">
+            <span>Banco</span>
+            <input type="number" formControlName="banco" min="2500" max="5000" />
+          </label>
+
+          <label class="field sticky">
+            <span>Malla</span>
+            <input type="text" formControlName="malla" />
+          </label>
+
+          <label class="field sticky">
+            <span>Pozo ID</span>
+            <input type="text" formControlName="idPozo" />
+          </label>
+
+          <label class="field dark wide-field">
+            <span>Tipo de roca</span>
+            <input type="text" formControlName="tipoRoca" />
+          </label>
+
+          <label class="field dark compact-field">
+            <span>Diseno (m)</span>
+            <input type="number" formControlName="profundidadDiseno" min="1" step="0.1" />
+          </label>
+
+          <label class="field dark compact-field">
+            <span>Perforados (m)</span>
+            <input type="number" formControlName="metrosPerforados" min="1" step="0.1" />
+          </label>
+
+          <label class="field dark compact-field">
+            <span>Real (m)</span>
+            <input type="number" formControlName="profundidadReal" min="1" step="0.1" />
+          </label>
+
+          <label class="field purple compact-field">
+            <span>Tipo</span>
+            <select formControlName="tipoPozo">
+              <option value="Produccion">Produccion</option>
+              <option value="Control">Control</option>
+              <option value="Trim">Trim</option>
+              <option value="Buffer">Buffer</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="form-section time-section">
+        <div class="time-grid">
+          <label class="field dark time-field">
+            <span>Inicio</span>
+            <input type="time" formControlName="horaInicio" />
+          </label>
+
+          <label class="field dark time-field">
+            <span>Fin</span>
+            <input type="time" formControlName="horaFin" />
+          </label>
+        </div>
+
+        <label class="observations">
+          Observaciones
+          <textarea rows="3" formControlName="observaciones"></textarea>
+        </label>
+
+        <input type="hidden" formControlName="codigoPerforacion" />
+
+        <button type="submit" class="save-button" [disabled]="guardando()">
+          <i class="bi bi-floppy"></i>
+          {{ guardando() ? 'Guardando...' : 'Guardar pozo' }}
+        </button>
+      </section>
+    </form>
+  </section>
+}
 
 <section class="table-panel">
   <header>
@@ -19,8 +145,8 @@
           <strong>{{ perforacion.codigoPerforacion }}</strong>
           <small>{{ perforacion.fecha }} - Banco {{ perforacion.banco }}</small>
         </div>
-        <span>{{ perforacion.metrosPerforados }} m</span>
-        <span>{{ perforacion.estado }}</span>
+        <span>{{ perforacion.equipo?.codigo || 'Equipo' }} - {{ perforacion.metrosPerforados }} m</span>
+        <span>{{ perforacion.estado }} - ROP {{ perforacion.calculos?.rop ?? 0 }}</span>
       </article>
     }
   </div>

@@ -1,25 +1,25 @@
 <section class="page-heading">
   <div>
-    <small>Supervisor</small>
-    <h1>Revision de perforaciones</h1>
+    <small>{{ esOperador ? 'Operador' : 'Supervisor' }}</small>
+    <h1>{{ esOperador ? 'Mi historial de perforaciones' : 'Revision de perforaciones' }}</h1>
   </div>
 </section>
 
 <section class="table-panel">
   <header>
-    <strong>Pendientes de aprobacion</strong>
-    <span>{{ pendientes().length }} registros</span>
+    <strong>{{ esOperador ? 'Registros propios' : 'Pendientes de aprobacion' }}</strong>
+    <span>{{ perforaciones().length }} registros</span>
   </header>
 
   <div class="table-list">
-    @for (perforacion of pendientes(); track perforacion.idPerforacion) {
+    @for (perforacion of perforaciones(); track perforacion.idPerforacion) {
       <article>
         <div>
           <strong>{{ perforacion.codigoPerforacion }}</strong>
           <small>{{ perforacion.tipoRoca }} - {{ perforacion.tipoPozo }}</small>
         </div>
-        <span>{{ perforacion.profundidadReal }} m</span>
-        <span>{{ perforacion.estado }}</span>
+        <span>{{ esOperador ? perforacion.estado : (perforacion.usuarioRegistro?.apellido + ', ' + perforacion.usuarioRegistro?.nombre) }}</span>
+        <span>{{ perforacion.profundidadReal }} m - {{ perforacion.equipo?.codigo }}</span>
       </article>
     }
   </div>

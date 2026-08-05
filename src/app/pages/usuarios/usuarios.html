@@ -3,8 +3,66 @@
     <small>Administracion</small>
     <h1>Usuarios y roles</h1>
   </div>
-  <button type="button">Nuevo usuario</button>
+  <button type="button" (click)="toggleFormulario()">{{ mostrarFormulario() ? 'Cerrar' : 'Nuevo usuario' }}</button>
 </section>
+
+@if (mostrarFormulario()) {
+  <section class="form-panel">
+    <header>
+      <strong>Alta de usuario</strong>
+      <span>Asignacion de rol y acceso inicial</span>
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="crearUsuario()">
+      <label>
+        Rol
+        <select formControlName="idRol">
+          <option [ngValue]="0">Seleccionar rol</option>
+          @for (rol of roles(); track rol.idRol) {
+            <option [ngValue]="rol.idRol">{{ rol.nombre }}</option>
+          }
+        </select>
+      </label>
+
+      <label>
+        Legajo
+        <input type="text" formControlName="legajo" />
+      </label>
+
+      <label>
+        Nombre
+        <input type="text" formControlName="nombre" />
+      </label>
+
+      <label>
+        Apellido
+        <input type="text" formControlName="apellido" />
+      </label>
+
+      <label>
+        Email
+        <input type="email" formControlName="email" />
+      </label>
+
+      <label>
+        Contrasena inicial
+        <input type="password" formControlName="password" />
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="guardando()">{{ guardando() ? 'Guardando...' : 'Crear usuario' }}</button>
+      </div>
+    </form>
+  </section>
+}
+
+@if (mensaje()) {
+  <div class="feedback success">{{ mensaje() }}</div>
+}
+
+@if (error()) {
+  <div class="feedback error">{{ error() }}</div>
+}
 
 <section class="table-panel">
   <header>
